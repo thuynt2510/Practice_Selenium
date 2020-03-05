@@ -54,7 +54,7 @@ public class Session3 {
 		// Step 7 : input customer registration
 		// customer name
 		String cus_name = "thuynt";
-		String dob = "10/25/1983";
+		String dob = "1983-10-25";
 		String address = "Nguyen Hoang Ton";
 		String city = "Ha noi";
 		String state = "NA";
@@ -62,7 +62,7 @@ public class Session3 {
 		String tel = "0936984868";
 		String email = "thuynt" + random(num) + "@gmail.com";
 		String pass = "123456";
-
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//input[@name='name']")).sendKeys(cus_name);
 		// gender
 		driver.findElement(By.xpath("//input[@value='f']")).click();
@@ -109,10 +109,11 @@ public class Session3 {
 		System.out.println(gen_aft);
 		// So sanh value cua gender voi ki tu dau tin trong chuoi gender
 		Assert.assertEquals(gen_aft, gen_bef);
-		/*
-		 * So sanh DOB chua lam duoc
-		 * 
-		 */
+
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Birthdate']//following-sibling::td")).getText(),
+				dob);
+		System.out.println(driver.findElement(By.xpath("//td[text()='Birthdate']//following-sibling::td")).getText());
+
 		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']//following-sibling::td")).getText(),
 				address);
 		System.out.println(driver.findElement(By.xpath("//td[text()='Address']//following-sibling::td")).getText());
