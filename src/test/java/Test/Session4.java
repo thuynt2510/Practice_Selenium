@@ -2,23 +2,27 @@ package Test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.List;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class Session4 {
 
 	WebDriver driver;
 
-	@Test(priority = 1)
+	@Test(enabled = false)
 	public void TC01() {
 
 		// Step 1: Vàotranghttp://the-internet.herokuapp.com/basic_auth
@@ -36,7 +40,7 @@ public class Session4 {
 
 	}
 
-	@Test(priority = 2)
+	@Test(enabled = false)
 	void TC02() throws InterruptedException {
 
 		// Step 1: Vàotrang http://www.myntra.com/
@@ -66,7 +70,7 @@ public class Session4 {
 
 	}
 
-	@Test(priority = 3)
+	@Test(enabled = false)
 	void TC03() throws InterruptedException {
 
 		// Step 1: Vàotrang
@@ -108,33 +112,44 @@ public class Session4 {
 		driver.get("https://jqueryui.com/resources/demos/selectable/display-grid.html");
 
 		// step 2 Chọn random các ô ( vd: 1 3 5 7 9)
-
+		// Nhan phim ctrl
 		Actions act = new Actions(driver);
-		WebElement el1 = driver.findElement(By.xpath("//li[text()=1]"));
-		WebElement el3 = driver.findElement(By.xpath("//li[text()=3]"));
-		WebElement el5 = driver.findElement(By.xpath("//li[text()=5]"));
-		WebElement el7 = driver.findElement(By.xpath("//li[text()=7]"));
-		WebElement el9 = driver.findElement(By.xpath("//li[text()=9]"));
-		act.keyDown(el1, Keys.CONTROL);
-		act.keyDown(el3, Keys.CONTROL);
-		act.keyDown(el5, Keys.CONTROL);
-		act.keyDown(el7, Keys.CONTROL);
-		act.keyDown(el9, Keys.CONTROL);
-		Thread.sleep(5000);
-		act.build().perform();
+		act.keyDown(Keys.CONTROL).perform();
 
+		// Nhan vao so 1,3,5,7,9
+		String n1 = "1";
+		String n2 = "3";
+		String n3 = "5";
+		String n4 = "7";
+		String n5 = "9";
+
+		WebElement el1 = driver.findElement(By.xpath("//li[text()=" + n1 + "]"));
+		el1.click();
+		WebElement el3 = driver.findElement(By.xpath("//li[text()=" + n2 + "]"));
+		el3.click();
+		WebElement el5 = driver.findElement(By.xpath("//li[text()=" + n3 + "]"));
+		el5.click();
+		WebElement el7 = driver.findElement(By.xpath("//li[text()=" + n4 + "]"));
+		el7.click();
+		WebElement el9 = driver.findElement(By.xpath("//li[text()=" + n5 + "]"));
+		el9.click();
+		act.release();
 		// Step 3: Sau khichọn – kiểmtrađúng 4 phầntửđãđượcchọnthànhcông
 
-		el1.isSelected();
-		el3.isSelected();
-		el5.isSelected();
-		el7.isSelected();
-		el9.isSelected();
+		List<WebElement> list = driver.findElements(By.xpath("//li[contains(@class,'ui-selected')]"));
+
+		System.out.println("Tong cac so duoc chon : " + list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println("Danh sach cac so duoc chon: " + list.get(i).getText());
+
+		}
+
 		System.out.println("TC04 done");
 
 	}
 
-	@Test(priority = 5)
+	@Test(enabled = false)
 	void TC05() throws InterruptedException {
 
 		// Vao trang nay http://swisnl.github.io/jQuery-contextMenu/demo.html
@@ -161,7 +176,7 @@ public class Session4 {
 
 	}
 
-	@Test(priority = 6)
+	@Test(enabled = false)
 	void TC06() throws InterruptedException {
 
 		// Step 1: Vàotranghttps://demos.telerik.com/kendo-ui/dragdrop/angular
@@ -192,8 +207,8 @@ public class Session4 {
 
 	@BeforeTest
 	public void beforeTest() {
-
-		driver = new FirefoxDriver();
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
 
 	}
 
